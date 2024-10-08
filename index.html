@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перегляд зображень</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+            font-size: 2em;
+            color: #555;
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: 56px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+        .image-viewer {
+            margin-top: 30px;
+        }
+
+        .image-viewer img {
+            width: 100%;
+            max-width: 720px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .thumbnail {
+                width: 80px;
+                height: 45px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .thumbnail {
+                width: 60px;
+                height: 34px;
+            }
+
+            h1 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Галерея зображень тварин</h1>
+
+<div class="gallery" id="gallery"></div>
+
+<div class="image-viewer">
+    <img id="imageDisplay" src="" alt="Selected Image">
+</div>
+
+<footer>
+    <h3>Перегляд зображень тварин, що занесені до Червоної книги</h3>
+</footer>
+
+<script>
+    // Вибір елемента для відображення зображення
+    const imgDisplay = document.getElementById('imageDisplay');
+    const galleryContainer = document.getElementById('gallery');
+    let images = [];
+
+    // Завантаження зображень із файлу images.json
+    fetch('images.json')
+        .then(response => response.json())
+        .then(data => {
+            images = data.images; // Зберігаємо зображення у масив
+            createGallery(images); // Створюємо галерею
+            selectImage(0); // Показуємо перше зображення за замовчуванням
+        })
+        .catch(error => console.error('Помилка завантаження зображень:', error));
+
+    // Функція для створення галереї зображень
+    function createGallery(images) {
+        images.forEach((image, index) => {
+            const imgElement = document.createElement('img');
+            imgElement.src = image;
+            imgElement.alt = 'Thumbnail';
+            imgElement.classList.add('thumbnail');
+            imgElement.onclick = () => selectImage(index);
+            galleryContainer.appendChild(imgElement);
+        });
+    }
+
+    // Функція для оновлення зображення
+    function selectImage(index) {
+        imgDisplay.src = images[index];
+    }
+</script>
+
+</body>
+</html>
