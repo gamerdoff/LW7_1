@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перегляд зображень</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+            font-size: 2rem;
+            color: #555;
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .thumbnail {
+            width: 15vw; /* Відносні одиниці для адаптивності */
+            max-width: 150px;
+            height: auto;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+        .image-viewer {
+            margin-top: 30px;
+        }
+
+        .image-viewer img {
+            width: 80vw; /* Відносна ширина для адаптивності */
+            max-width: 720px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            font-size: 1rem;
+        }
+
+        /* Адаптивність для маленьких екранів */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .thumbnail {
+                width: 25vw; /* Збільшуємо відносну ширину для менших екранів */
+            }
+
+            .image-viewer img {
+                width: 90vw; /* Збільшена відносна ширина для вузьких екранів */
+            }
+
+            footer {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Галерея зображень тварин</h1>
+
+<div class="gallery">
+    <!-- Зменшені копії зображень -->
+    <img class="thumbnail" src="file1.jpg" alt="Thumbnail" onclick="selectImage(0)">
+    <img class="thumbnail" src="file2.jpg" alt="Thumbnail" onclick="selectImage(1)">
+    <img class="thumbnail" src="file3.gif" alt="Thumbnail" onclick="selectImage(2)">
+    <img class="thumbnail" src="file4.gif" alt="Thumbnail" onclick="selectImage(3)">
+</div>
+
+<div class="image-viewer">
+    <!-- Основне велике зображення -->
+    <img id="imageDisplay" src="" alt="Selected Image">
+</div>
+
+<footer>
+    <h3>Перегляд зображень тварин, що занесені до Червоної книги</h3>
+</footer>
+
+<script>
+    // Масив зображень у форматі JSON
+    var images = ['file1.jpg', 'file2.jpg', 'file3.gif', 'file4.gif'];
+
+    // Вибір елемента для відображення зображення
+    var imgDisplay = document.getElementById('imageDisplay');
+
+    // Функція для оновлення зображення
+    function selectImage(index) {
+        imgDisplay.src = images[index];
+    }
+
+    // Показати перше зображення при завантаженні сторінки
+    selectImage(0);
+</script>
+
+</body>
+</html>
